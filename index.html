@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b55">
+  <meta name="description" content="SkillSwap — a campus platform for sharing useful assets and student skills.">
+  <title>SkillSwap | Campus Asset &amp; Knowledge Exchange</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#dashboard" data-go="dashboard" aria-label="SkillSwap home">
+        <img src="assets/skillswap-logo.png" alt="SkillSwap — Campus Asset and Knowledge Exchange">
+        <span class="brand-copy"><strong>SkillSwap</strong><small>Campus exchange</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button data-go="dashboard" class="nav-link" data-nav="dashboard">Home</button>
+        <button data-go="browse" class="nav-link" data-nav="browse">Browse</button>
+        <button data-go="create-listing" class="nav-link" data-nav="create-listing">Post Listing</button>
+        <button data-go="requests" class="nav-link" data-nav="requests">My Requests</button>
+        <button data-go="profile" class="nav-link" data-nav="profile">Profile</button>
+      </nav>
+      <div class="account-tools">
+        <button class="credit-pill" data-go="profile"><span class="credit-dot"></span><span id="header-credits">120 credits</span></button>
+        <button class="user-chip" data-go="profile" aria-label="Open profile"><span class="avatar avatar-small">AR</span><span>Amina</span></button>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+    </header>
+
+    <main>
+      <!-- 1. Login / Sign Up -->
+      <section class="screen auth-screen active" id="login" data-title="Login / Sign Up">
+        <div class="auth-brand-panel">
+          <img class="auth-logo" src="assets/skillswap-logo.png" alt="SkillSwap logo">
+          <p class="eyebrow light">A student-powered exchange</p>
+          <h1>Your campus,<br>shared smarter.</h1>
+          <p class="auth-lede">Borrow what you need. Share what you know.</p>
+          <div class="auth-note"><strong>Built for campus life.</strong><span>A trusted place to exchange useful things and practical skills with your community.</span></div>
+          <div class="campus-orbit orbit-one"></div><div class="campus-orbit orbit-two"></div>
+        </div>
+        <div class="auth-content">
+          <form class="auth-card" id="login-form">
+            <h2 id="auth-heading">Welcome to SkillSwap</h2>
+            <p class="muted" id="auth-subheading">Sign in with your university account to continue.</p>
+            <label class="field">University email<input required type="email" placeholder="you@university.edu" value="amina.rahman@northbridge.edu"></label>
+            <label class="field">Password<input required type="password" placeholder="Enter your password" value="campus2026"></label>
+            <button type="button" class="text-button forgot">Forgot password?</button>
+            <button class="button primary full" type="submit" id="auth-submit">Log in to your account</button>
+            <div class="auth-divider"><span></span><small id="auth-switch-label">New to campus exchange?</small><span></span></div>
+            <button class="button secondary full" type="button" id="auth-switch">Create a student account</button>
+            <p class="fine-print">Use your verified university email to join.</p>
+          </form>
+        </div>
+      </section>
+
+      <div class="app-content" id="app-content">
+        <!-- 2. Dashboard -->
+        <section class="screen" id="dashboard" data-title="Home / Dashboard">
+          <div class="page-heading"><div><p class="eyebrow">Tuesday, October 3, 2026</p><h1>Welcome back, Amina</h1><p class="muted">Your campus exchange at a glance</p></div></div>
+          <div class="welcome-banner"><div><h2>Make campus life a little easier.</h2><p>Find a study partner, borrow a tool, or share something useful.</p></div><button class="button banner-button" data-go="browse">Explore listings</button></div>
+          <div class="dashboard-grid">
+            <article class="stat-card"><div class="stat-label"><span class="stat-icon blue"></span>Available listings</div><strong>24</strong><small>assets &amp; skills shared across campus</small></article>
+            <article class="stat-card"><div class="stat-label"><span class="stat-icon green"></span>Your credit balance</div><strong id="dashboard-credits">120</strong><small>campus credits ready to use</small></article>
+            <article class="quick-card"><h2>Quick actions</h2><div class="button-row"><button class="button primary" data-go="browse">Browse</button><button class="button secondary" data-go="create-listing">Post listing</button><button class="button secondary" data-go="requests">Requests</button></div></article>
+          </div>
+          <div class="section-heading"><h2>Recent activity</h2><button class="text-button" data-go="requests">View all activity <span aria-hidden="true">›</span></button></div>
+          <div class="activity-list" id="recent-activity"></div>
+        </section>
+
+        <!-- 3. Browse -->
+        <section class="screen" id="browse" data-title="Browse Assets & Skills">
+          <div class="page-heading"><div><p class="eyebrow">Campus marketplace</p><h1>Browse assets &amp; skills</h1><p class="muted">Useful things and real student expertise, shared close to you.</p></div></div>
+          <div class="search-bar"><span class="search-mark" aria-hidden="true"></span><input id="browse-search" type="search" placeholder="Tools, study help, equipment…" aria-label="Search listings"><button class="button primary" data-go="search-results">Search</button></div>
+          <div class="browse-controls"><div class="segmented" role="group" aria-label="Listing type"><button class="segment selected" data-kind="all">All</button><button class="segment" data-kind="Asset">Assets</button><button class="segment" data-kind="Skill">Skills</button></div><button class="button secondary filter-button" data-go="search-results">Filters</button></div>
+          <div class="section-heading"><h2>Available near campus</h2><span class="muted small">24 listings · Recently added</span></div>
+          <div class="listing-grid" id="listing-grid"></div>
+        </section>
+
+        <!-- 4. Search and filters -->
+        <section class="screen" id="search-results" data-title="Search & Filter Results">
+          <div class="page-heading"><div><p class="eyebrow">Explore the marketplace</p><h1>Search results</h1><p class="muted">Refine your search to find the right campus match.</p></div></div>
+          <div class="search-bar"><span class="search-mark" aria-hidden="true"></span><input id="results-search" type="search" value="Arduino" aria-label="Search listings"><button class="button primary" id="search-submit">Search</button></div>
+          <div class="filter-panel"><h2>Filters</h2><div class="filter-fields">
+            <label class="field">Category<select id="category-filter"><option>All categories</option><option>Electronics</option><option>Mathematics</option><option>Computer science</option></select></label>
+            <label class="field">Availability<select><option>Any time</option><option>Available today</option><option>This week</option></select></label>
+            <label class="field">Subject<select><option>All subjects</option><option>Engineering</option><option>Computer science</option></select></label>
+            <button class="button primary apply-filters">Apply filters</button>
+          </div></div>
+          <div class="section-heading results-heading"><h2 id="results-count">3 results for “Arduino”</h2><label class="sort-control">Sort by <select id="sort-select"><option>Relevance</option><option>Credit: low to high</option><option>Recently added</option></select></label></div>
+          <div class="results-list" id="results-list"></div>
+        </section>
+
+        <!-- 5. Details -->
+        <section class="screen" id="item-details" data-title="Item / Skill Details">
+          <div class="page-heading"><div><p class="eyebrow">Marketplace listing</p><h1>Arduino Uno Kit</h1><p class="muted">A practical starter set for your next electronics project.</p></div></div>
+          <div class="detail-layout">
+            <div class="detail-artboard"><div class="asset-art art-board large-art" aria-label="Illustration of an Arduino circuit board"><span class="board-chip"></span><span class="board-pin pin-a"></span><span class="board-pin pin-b"></span><span class="board-pin pin-c"></span><span class="board-pin pin-d"></span></div></div>
+            <article class="detail-card">
+              <div class="badge-row"><span class="badge asset-badge">Asset</span><span class="badge verified-badge">Campus verified</span></div>
+              <h2>Arduino Uno Kit</h2><p class="muted">Electronics · North Campus</p>
+              <div class="owner-row"><span class="avatar">AR</span><div><strong>Amina Rahman</strong><small>Computer Science · Verified student</small></div></div>
+              <hr><h3>About this listing</h3><p>A reliable Arduino kit for coursework and small projects. Includes board, USB cable and basic components.</p>
+              <div class="detail-meta"><div><small>Availability</small><strong>Available · Pickup at Engineering Hall</strong></div><div><small>Exchange value</small><strong class="credit-value">15 campus credits</strong></div></div>
+              <button class="button primary full" data-go="request-item">Request this item</button><p class="fine-print">Your balance after request: <span id="after-request-balance">105</span> credits</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 6. Request -->
+        <section class="screen" id="request-item" data-title="Request Item / Skill Session">
+          <div class="page-heading"><div><p class="eyebrow">Request an exchange</p><h1>Request Arduino Uno Kit</h1><p class="muted">Send a short note and choose when you need the item.</p></div></div>
+          <div class="request-layout">
+            <form class="form-card" id="request-form"><div class="requested-item"><span class="badge asset-badge">Requesting</span><div><strong>Arduino Uno Kit</strong><small>15 campus credits · Asset</small></div></div>
+              <div class="form-grid"><label class="field">Requested date<input type="date" value="2026-10-06"></label><label class="field">Pickup time<input type="time" value="10:00"></label><label class="field">Duration / return date<input type="text" value="Return by October 9"></label></div>
+              <label class="field">Message to owner<textarea rows="4">I need this item for a coursework project. Please confirm availability and let me know a convenient pickup time.</textarea></label>
+              <button class="button primary" type="submit">Send request</button><p class="fine-print">Your request will appear in My Requests after submission.</p>
+            </form>
+            <aside class="request-aside"><article class="summary-card"><h2>Exchange summary</h2><div class="summary-line"><span>Request cost</span><strong>15 credits</strong></div><div class="summary-line"><span>Current balance</span><strong id="request-current-balance">120 credits</strong></div><div class="summary-line total"><span>Balance after request</span><strong id="request-balance">105 credits</strong></div></article><div class="notice-card">Your credits are only held once the owner accepts your request.</div></aside>
+          </div>
+        </section>
+
+        <!-- 7. Create listing -->
+        <section class="screen" id="create-listing" data-title="Create Listing">
+          <div class="page-heading"><div><p class="eyebrow">Share with your community</p><h1>Create a listing</h1><p class="muted">Add the details students need to make a confident request.</p></div></div>
+          <form class="create-layout" id="listing-form"><div class="form-card create-fields"><fieldset><legend>What are you sharing?</legend><div class="segmented type-selector"><label><input type="radio" name="listing-type" value="Asset" checked><span>Asset</span></label><label><input type="radio" name="listing-type" value="Skill"><span>Skill</span></label></div></fieldset>
+              <label class="field">Title<input name="title" required placeholder="e.g. Arduino Uno Kit"></label><div class="form-grid"><label class="field">Category / subject<input name="category" required placeholder="e.g. Electronics"></label><label class="field">Availability<input name="availability" placeholder="e.g. Weekdays · 10 AM–4 PM"></label><label class="field">Credit value<input name="credits" type="number" min="1" value="15"></label><label class="field">Description<textarea name="description" rows="3" placeholder="Describe the item, what is included, and any conditions…"></textarea></label></div>
+            </div><aside class="form-card upload-card"><h2>Listing photo</h2><label class="upload-zone"><input type="file" accept="image/png,image/jpeg"><span class="upload-icon">＋</span><strong>Drop a photo here</strong><small>or choose a file from your device</small><small>JPG or PNG · up to 10 MB</small></label><div class="notice-card">Your campus email is verified</div><button class="button primary full" type="submit">Publish listing</button><p class="fine-print">You can edit listing details later.</p></aside></form>
+        </section>
+
+        <!-- 8. My Requests -->
+        <section class="screen" id="requests" data-title="My Requests / Transactions">
+          <div class="page-heading"><div><p class="eyebrow">Your exchanges</p><h1>My Requests</h1><p class="muted">Track requests, pickups, and completed campus exchanges.</p></div></div>
+          <div class="request-tabs" role="tablist"><button class="request-tab selected" data-status="All">All <span>12</span></button><button class="request-tab" data-status="Pending">Pending <span>2</span></button><button class="request-tab" data-status="Accepted">Accepted <span>3</span></button><button class="request-tab" data-status="Borrowed">Borrowed <span>1</span></button><button class="request-tab" data-status="Returned">Returned <span>6</span></button><label class="sort-control">Most recent <select><option>Newest</option><option>Oldest</option></select></label></div>
+          <div class="transaction-list" id="transaction-list"></div>
+        </section>
+
+        <!-- 9. Transaction details -->
+        <section class="screen" id="transaction-details" data-title="Transaction Details / Status">
+          <div class="page-heading"><div><p class="eyebrow">Exchange tracking</p><h1>Arduino Uno Kit</h1><p class="muted">Transaction ID: SS-00124 · Created October 2, 2026</p></div></div>
+          <article class="timeline-card"><h2>Exchange timeline</h2><div class="timeline"><div class="timeline-track"><span class="timeline-progress"></span></div><div class="timeline-step done"><span></span><strong>Requested</strong><small>Oct 2</small></div><div class="timeline-step done"><span></span><strong>Accepted</strong><small>Oct 2</small></div><div class="timeline-step current"><span></span><strong>Borrowed</strong><small>Oct 3</small></div><div class="timeline-step"><span></span><strong>Returned</strong><small>Oct 8</small></div><div class="timeline-step"><span></span><strong>Complete</strong><small>—</small></div></div></article>
+          <div class="transaction-detail-grid"><article class="people-card"><h2>People in this exchange</h2><div class="person-row"><span class="avatar">DK</span><div><strong>Daniel Kim</strong><small>Owner · Electrical Engineering</small></div></div><div class="person-row"><span class="avatar green-avatar">AR</span><div><strong>Amina Rahman</strong><small>Borrower · Computer Science</small></div></div></article><article class="summary-card"><h2>Exchange summary</h2><div class="summary-line"><span>Item</span><strong>Arduino Uno Kit</strong></div><div class="summary-line"><span>Credits</span><strong>15 campus credits</strong></div><div class="summary-line"><span>Return by</span><strong>October 8, 2026</strong></div></article></div>
+          <div class="transaction-actions"><button class="button primary" data-action="message">Message owner</button><button class="button secondary" data-action="returned">Mark returned</button><button class="text-button danger" data-action="report">Report an issue</button></div>
+        </section>
+
+        <!-- 10. Profile -->
+        <section class="screen" id="profile" data-title="Profile & Credit Balance">
+          <div class="page-heading"><div><p class="eyebrow">Your campus account</p><h1>Profile &amp; credits</h1><p class="muted">Manage your student profile and exchange activity.</p></div></div>
+          <article class="profile-card"><span class="avatar avatar-large">AR</span><div class="profile-copy"><h2>Amina Rahman</h2><p>Computer Science · Northbridge University</p><div class="profile-meta"><span class="badge verified-badge">Campus verified</span><span>Member since September 2026</span></div></div><button class="button secondary" data-action="edit-profile">Edit profile</button></article>
+          <div class="dashboard-grid profile-stats"><article class="stat-card"><div class="stat-label"><span class="stat-icon green"></span>Credit balance</div><strong id="profile-credits">120</strong><small>campus credits available</small></article><article class="stat-card"><div class="stat-label"><span class="stat-icon blue"></span>Active listings</div><strong>6</strong><small>items &amp; skills shared</small></article><article class="stat-card"><div class="stat-label"><span class="stat-icon green"></span>Completed exchanges</div><strong>12</strong><small>successful campus exchanges</small></article></div>
+          <div class="section-heading"><h2>Account options</h2></div><div class="profile-lower"><div class="option-list"><button class="option-row" data-go="browse"><span class="option-number">1</span><span><strong>My Listings</strong><small>Manage your shared assets and skills</small></span><b>›</b></button><button class="option-row" data-action="credit-history"><span class="option-number">2</span><span><strong>Credit History</strong><small>See credits earned and spent</small></span><b>›</b></button><button class="option-row" data-action="settings"><span class="option-number">3</span><span><strong>Settings</strong><small>Notifications, privacy and account</small></span><b>›</b></button></div><article class="summary-card credit-history-card"><h2>Your campus credits</h2><p class="big-balance"><strong id="profile-credit-card">120</strong><span>available balance</span></p><p>Use credits to borrow an item or book a skill session.</p><button class="text-button" data-action="credit-history">Credit activity <span>›</span></button><hr><button class="text-button danger" data-go="login">Log out</button></article></div>
+        </section>
+      </div>
+    </main>
+    <footer class="app-footer"><span>SkillSwap · Campus Asset &amp; Knowledge Exchange</span><span id="page-counter">01 / 10</span></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
